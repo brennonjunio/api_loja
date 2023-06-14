@@ -5,6 +5,9 @@ export class produtoRepository {
   private produtos = [];
   async salvarProd(produto) {
     this.produtos.push(produto);
-    console.log('produtos>>>', this.produtos);
+  }
+
+  async listar() {
+    return this.produtos;
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { produtoRepository } from './produto.repository';
 
 @Controller('produtos')
@@ -9,5 +9,9 @@ export class produtoController {
   async criarProduto(@Body() dadosProduto) {
     this.produtoRepository.salvarProd(dadosProduto);
     return dadosProduto;
+  }
+  @Get()
+  async listarProdutos() {
+    return this.produtoRepository.listar();
   }
 }
