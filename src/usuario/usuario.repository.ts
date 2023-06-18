@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { UsuarioEntity } from './usuario.entity';
 
 @Injectable()
 export class usuarioRepository {
   //criando um array para salvar os dados retornados do usuario, foi criado o metodo salvar para isso
-  private usuarios = [];
-  async salvar(usuario) {
+  private usuarios: UsuarioEntity[] = [];
+  async salvar(usuario: UsuarioEntity) {
     //insert no array>>
     this.usuarios.push(usuario);
   }
