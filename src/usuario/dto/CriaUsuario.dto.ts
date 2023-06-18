@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { emailEhUnico } from '../validacao/email-eh-unico.validator';
 //Criando padrões dos campos
 export class CriaUsuarioDto {
   @IsNotEmpty({
@@ -6,6 +7,7 @@ export class CriaUsuarioDto {
   })
   nome: string;
 
+  @emailEhUnico({ message: 'já existe um usuario com este e-mail' })
   @IsEmail(undefined, {
     message: 'Email Invalido',
   })
