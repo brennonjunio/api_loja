@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import * as classValidator from 'class-validator';
+import { IsUUID } from 'class-validator';
 export class CaracteristicaProdutoDTO {
   @classValidator.IsString()
   @classValidator.IsNotEmpty({
@@ -27,6 +28,9 @@ export class ImagemProdutoDTO {
 }
 
 export class CriaProdutoDTO {
+  // @IsUUID(null, { message: 'ID de usuário inválido' })
+  // usuarioId: string;
+
   @classValidator.IsString()
   @classValidator.IsNotEmpty({
     message: 'Nome do produto não pode ser nulo',
