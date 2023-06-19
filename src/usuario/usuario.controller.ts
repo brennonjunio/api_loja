@@ -54,8 +54,7 @@ export class usuarioController {
       NovosDados,
     );
     return {
-      usuario: usuarioAtualizado,
-      message: 'Usuario Atualizado Com sucesso',
+      message: `usuario:>>> ${usuarioAtualizado.nome} <<< atualizado com sucesso`,
     };
   }
 }
