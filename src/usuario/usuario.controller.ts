@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioEntity } from './usuario.entity';
 import { usuarioRepository } from './usuario.repository';
 import { CriaUsuarioDto } from 'src/usuario/dto/CriaUsuario.dto';
 import { v4 as uuid } from 'uuid';
+import { ListaUsuarioDto } from './dto/ListaUsuario.dto';
+import { atualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
 
 @Controller('usuarios')
 export class usuarioController {
@@ -22,8 +24,10 @@ export class usuarioController {
     usuarioEntity.id = uuid();
     //apos instanciado, ira usar o metodo salvar para pegar os dados do usuario
     this.usuarioRepository.salvar(usuarioEntity);
+
     return {
       id: usuarioEntity.id,
+      nome: usuarioEntity.nome,
       message: `usuario: ${usuarioEntity.nome} Criado Com sucesso`,
     };
   }
@@ -32,6 +36,26 @@ export class usuarioController {
   //@body é um decorator que recebe os dados da requisição
   async listarUsuarios() {
     //apos instanciado, ira usar o metodo salvar para pegar os dados do usuario
-    return this.usuarioRepository.listar();
+    const usuariosSalvos = await this.usuarioRepository.listar();
+    const usuariosLista = usuariosSalvos.map(
+      (usuario) => new ListaUsuarioDto(usuario.id, usuario.nome),
+      //aqui os dados escolhidos para retornar do DTO
+    );
+    return usuariosLista;
+  }
+
+  @Put('/:id') //rota para atualizar os dados do usuario, abaixo passamos o @params que pega esse id
+  async atualizaUsuario(
+    @Param('id') id: string,
+    @Body() NovosDados: atualizaUsuarioDTO,
+  ) {
+    const usuarioAtualizado = await this.usuarioRepository.atualiza(
+      id,
+      NovosDados,
+    );
+    return {
+      usuario: usuarioAtualizado,
+      message: 'Usuario Atualizado Com sucesso',
+    };
   }
 }
