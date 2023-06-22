@@ -7,3 +7,5 @@ import { produtoRepository } from './produto.repository';
   providers: [produtoRepository],
 })
 export class produtoModule {}
+
+//ok, atualizado
